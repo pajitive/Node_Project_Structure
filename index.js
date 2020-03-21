@@ -1,0 +1,26 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const morgan = require('morgan');
+
+require('./config/database');
+const app = express();
+app.use(morgan('combined'));
+
+app.use(cors())
+app.use((req,res,next)=>{
+     //set headers to allow cross origin request.
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     next();
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended:true}));
+
+//app.use(require('./router'));
+ require('./router')(app);
+app.listen(5000,()=>{
+    console.log("server is runnig on port 5000...");
+})
