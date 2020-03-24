@@ -20,7 +20,7 @@ module.exports = {
         }
       }
       catch(e){
-          console.log(e.message);
+          console.log(e);
           res.status(500).send({result:false,message:'Something went wrong...'});
       }
     },

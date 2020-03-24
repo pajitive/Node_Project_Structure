@@ -21,8 +21,6 @@ const User = mongoose.Schema({
     },
     phone:{
         type:Number,
-        min:0,
-        max:10
     }
 });
 
@@ -30,11 +28,4 @@ const User = mongoose.Schema({
 //     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 //     return re.test(email)
 // }
-
-user.pre('validate',(res,next)=>{
-   if(res.email){
-    console.log('pre Operation====>>>',res.email);
-   }
-   next();
-})
 module.exports = mongoose.model('user',User);
