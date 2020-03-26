@@ -19,7 +19,7 @@ module.exports = {
         //   expiresIn: 60 * 60
         // });
         // if (resultData) {
-          let salt = await bcrypt.getSalt(10);
+          let salt = await bcrypt.genSalt(10);
           User.password = await bcrypt.hash(password,salt);
           let newUser = await User.save();
           res.status(200).send({ result: true, message:'User is registered successfully...!' });
