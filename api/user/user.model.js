@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var jwt = require("jsonwebtoken");
 
 const User = mongoose.Schema({
     name: {
@@ -21,11 +22,18 @@ const User = mongoose.Schema({
     },
     phone:{
         type:Number,
-    }
+    },
+    role:{
+        type:String, 
+        enum:['customer','admin','superadmin'],
+        default:'customer'
+    }, // For role base API
+    createdAt:{ type:Date,default:Date.now},
+    updatedAt:{type:Date,default:Date.now}
 });
 
-// var validateEmail = email=>{
-//     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-//     return re.test(email)
-// }
+User.methods.generateAuthToken = function(){
+    let genToken =  jwt.sign({_id:this._id,role:this.role}, 'structure_private_key',{expiresIn:60*60});
+    return genToken;
+}
 module.exports = mongoose.model('user',User);
